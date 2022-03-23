@@ -1,0 +1,12 @@
+version: "3.7" 
+services:
+  php:
+    build:
+      context: .
+    image: php_api_todos
+    container_name: api_todos
+    ports:
+      - "8000:8000"
+    volumes:
+      - ".:/var/www/html/" 
+    command: php -S 0.0.0.0:8000 -t public/
