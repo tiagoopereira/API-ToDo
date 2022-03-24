@@ -2,13 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Service\AuthService;
+use App\Helper\ResponseErrorHelper;
+use App\Service\UserService;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
+    public function __construct(
+        private AuthService $authService,
+        private UserService $userService
+    )
+    {
+    }
+
     public function register(Request $request): JsonResponse
     {
         $this->validate($request, [
@@ -17,12 +26,14 @@ class AuthController extends Controller
             'password' => 'required'
         ]);
 
-        $userData = $request->only('name', 'email', 'password');
-        $userData['password'] = Hash::make($userData['password']);
+        try {
+            $data = $request->only('name', 'email', 'password');
+            $user = $this->userService->create($data);
 
-        $user = User::create($userData);
-
-        return response()->json($user, JsonResponse::HTTP_CREATED);
+            return response()->json($user, JsonResponse::HTTP_CREATED);
+        } catch (\Exception $e) {
+            return ResponseErrorHelper::json($e->getMessage(), JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
     public function login(Request $request): JsonResponse
@@ -32,27 +43,16 @@ class AuthController extends Controller
             'password' => 'required'
         ]);
 
-        $email = $request->email;
-        $password = $request->password;
+        try {
+            $email = $request->email;
+            $password = $request->password;
+            $response = $this->authService->login($email, $password);
 
-        $user = User::where('email', $email)->first();
-
-        if (is_null($user) || !Hash::check($password, $user->password)) {
-            return response()->json(
-                [
-                    'error' => true,
-                    'message' => 'Wrong credentials.',
-                    'code' => JsonResponse::HTTP_UNAUTHORIZED
-                ],
-                JsonResponse::HTTP_UNAUTHORIZED
-            );
+            return response()->json($response);
+        } catch (AuthenticationException $e) {
+            return ResponseErrorHelper::json($e->getMessage(), JsonResponse::HTTP_UNAUTHORIZED);
+        } catch (\Exception $e) {
+            return ResponseErrorHelper::json($e->getMessage(), JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
         }
-
-        $token = $user->createToken('users');
-
-        return response()->json([
-            'access_token' => $token->accessToken,
-            'expires_at' => $token->token->expires_at
-        ]);
     }
 }
