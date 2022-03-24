@@ -3,13 +3,13 @@
 namespace App\Service;
 
 use App\Models\User;
-use App\Repository\UserRepository;
+use App\Repository\UsersRepository;
 use Illuminate\Support\Facades\Hash;
 
-class UserService extends BaseService
+class UsersService extends BaseService
 {
     public function __construct(
-        UserRepository $repository
+        UsersRepository $repository
     )
     {
         $this->class = User::class;

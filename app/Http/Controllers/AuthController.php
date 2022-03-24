@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Service\AuthService;
 use App\Helper\ResponseErrorHelper;
-use App\Service\UserService;
+use App\Service\UsersService;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -13,7 +13,7 @@ class AuthController extends Controller
 {
     public function __construct(
         private AuthService $authService,
-        private UserService $userService
+        private UsersService $UsersService
     )
     {
     }
@@ -28,7 +28,7 @@ class AuthController extends Controller
 
         try {
             $data = $request->only('name', 'email', 'password');
-            $user = $this->userService->create($data);
+            $user = $this->UsersService->create($data);
 
             return response()->json($user, JsonResponse::HTTP_CREATED);
         } catch (\Exception $e) {

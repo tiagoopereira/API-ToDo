@@ -2,10 +2,11 @@
 
 namespace App\Repository;
 
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;
+use App\Interface\RepositoryInterface;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
-abstract class BaseRepository
+abstract class BaseRepository implements RepositoryInterface
 {
     protected string $class;
 
@@ -14,17 +15,30 @@ abstract class BaseRepository
         return $this->class::create($entity->getAttributes());
     } 
 
-    public function findAll(int $per_page = null): ?LengthAwarePaginator
+    public function findAll(int $per_page = null, string $user_id = null): ?LengthAwarePaginator
     {
-        return $this->class::paginate($per_page);
+        if (is_null($user_id)) {
+            return $this->class::paginate($per_page);
+        }
+
+        return $this->findBy('user_id', $user_id, $per_page);
     }
 
-    public function find(string $id): ?Model
+    public function find(string $id, string $user_id = null): ?Model
     {
-        return $this->class::find($id);
+        if (is_null($user_id)) {
+            return $this->class::find($id);
+        }
+
+        return $this->class::find($id)?->where('user_id', $user_id)->first();
     }
 
-    public function findBy(string $field, mixed $value): ?Model
+    public function findBy(string $field, mixed $value, int $per_page = null): ?LengthAwarePaginator
+    {
+        return $this->class::where($field, $value)->paginate($per_page);
+    }
+
+    public function findOneBy(string $field, mixed $value): ?Model
     {
         return $this->class::where($field, $value)->first();
     }
@@ -37,8 +51,8 @@ abstract class BaseRepository
         return $entity;
     }
 
-    public function delete(string $id): ?bool
+    public function delete(Model $entity): ?bool
     {
-        return $this->class::destroy($id);
+        return $entity->delete();
     }
 }

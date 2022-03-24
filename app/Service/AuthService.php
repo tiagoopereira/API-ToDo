@@ -2,21 +2,21 @@
 
 namespace App\Service;
 
-use App\Repository\UserRepository;
+use App\Repository\UsersRepository;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\AuthenticationException;
 
 class AuthService
 {
     public function __construct(
-        private UserRepository $userRepository
+        private UsersRepository $UsersRepository
     )
     {
     }
 
     public function login(string $email, string $password): array
     {
-        $user = $this->userRepository->findBy('email', $email);
+        $user = $this->UsersRepository->findOneBy('email', $email);
 
         if (is_null($user) || !Hash::check($password, $user->password)) {
             throw new AuthenticationException('Wrong credentials.');
