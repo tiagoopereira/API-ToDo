@@ -11,9 +11,7 @@ use Symfony\Component\Translation\Exception\NotFoundResourceException;
 
 class TodosController extends Controller
 {
-    public function __construct(private TodosService $service)
-    {
-    }
+    public function __construct(private TodosService $service) {}
 
     public function index(Request $request): JsonResponse
     {

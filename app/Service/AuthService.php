@@ -8,15 +8,11 @@ use Illuminate\Auth\AuthenticationException;
 
 class AuthService
 {
-    public function __construct(
-        private UsersRepository $UsersRepository
-    )
-    {
-    }
+    public function __construct(private UsersRepository $usersRepository) {}
 
     public function login(string $email, string $password): array
     {
-        $user = $this->UsersRepository->findOneBy('email', $email);
+        $user = $this->usersRepository->findOneBy('email', $email);
 
         if (is_null($user) || !Hash::check($password, $user->password)) {
             throw new AuthenticationException('Wrong credentials.');

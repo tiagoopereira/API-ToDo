@@ -11,9 +11,7 @@ class TodosService extends BaseService
     /** @var TodoRepository */
     protected RepositoryInterface $repository;
 
-    public function __construct(
-        TodosRepository $repository
-    )
+    public function __construct(TodosRepository $repository)
     {
         $this->repository = $repository;
         $this->class = Todo::class;

@@ -65,7 +65,7 @@ class TodosControllerTest extends TestCase
 
         $this->actingAs($this->user)->get(route('todos.index'));
 
-        $this->assertResponseStatus(200);
+        $this->assertResponseOk();
         $this->seeJsonContains(['id' => $todos[0]->id]);
         $this->seeJsonContains(['id' => $todos[1]->id]);
     }
@@ -76,7 +76,7 @@ class TodosControllerTest extends TestCase
 
         $this->actingAs($this->user)->get(route('todos.show', ['id' => $todo->id]));
 
-        $this->assertResponseStatus(200);
+        $this->assertResponseOk();
         $this->seeJsonContains(['id' => $todo->id]);
     }
 
@@ -94,7 +94,7 @@ class TodosControllerTest extends TestCase
 
         $this->actingAs($this->user)->put(route('todos.update', ['id' => $todo->id]), $payload);
 
-        $this->assertResponseStatus(200);
+        $this->assertResponseOk();
         $this->seeInDatabase('todos', $payload);
     }
 
@@ -126,7 +126,7 @@ class TodosControllerTest extends TestCase
         $todo = Todo::factory()->create(['user_id' => $this->user->id]);
 
         $this->actingAs($this->user)->post(route('todo.updateStatus', ['id' => $todo->id, 'status' => 'done']));
-        $this->assertResponseStatus(200);
+        $this->assertResponseOk();
         $this->seeInDatabase('todos', ['id' => $todo->id, 'done' => true]);
     }
 
@@ -139,7 +139,7 @@ class TodosControllerTest extends TestCase
         ]);
 
         $this->actingAs($this->user)->post(route('todo.updateStatus', ['id' => $todo->id, 'status' => 'undone']));
-        $this->assertResponseStatus(200);
+        $this->assertResponseOk();
         $this->seeInDatabase('todos', ['id' => $todo->id, 'done' => false, 'done_at' => null]);
     }
 }

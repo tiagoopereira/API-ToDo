@@ -4,37 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Service\AuthService;
 use App\Helper\ResponseErrorHelper;
-use App\Service\UsersService;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
-    public function __construct(
-        private AuthService $authService,
-        private UsersService $UsersService
-    )
-    {
-    }
-
-    public function register(Request $request): JsonResponse
-    {
-        $this->validate($request, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|unique:users',
-            'password' => 'required'
-        ]);
-
-        try {
-            $data = $request->only('name', 'email', 'password');
-            $user = $this->UsersService->create($data);
-
-            return response()->json($user, JsonResponse::HTTP_CREATED);
-        } catch (\Exception $e) {
-            return ResponseErrorHelper::json($e->getMessage(), JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
-        }
-    }
+    public function __construct(private AuthService $authService) {}
 
     public function login(Request $request): JsonResponse
     {

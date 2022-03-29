@@ -5,22 +5,39 @@ namespace App\Service;
 use App\Models\User;
 use App\Repository\UsersRepository;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class UsersService extends BaseService
 {
-    public function __construct(
-        UsersRepository $repository
-    )
+    public function __construct(UsersRepository $repository)
     {
         $this->class = User::class;
         $this->repository = $repository;
     }
 
-    public function create(array $data): User
+    public function update(string $id, array $data, string $user_id = null): User
     {
-        $user = $this->fillEntity($data);
+        /** @var User */
+        $resource = Auth::user();
+        $data = $this->fillEntity($data);
+
+        return $this->repository->update($resource, $data);
+    }
+
+    public function delete(string $id, string $user_id = null): bool
+    {
+        /** @var User */
+        $resource = Auth::user();
+        $this->repository->delete($resource);
+
+        return true;
+    }
+
+    public function fillEntity(array $data): User
+    {
+        $user = new $this->class($data);
         $user->password = Hash::make($user->password);
 
-        return $this->repository->create($user);
+        return $user;
     }
 }
