@@ -1,24 +1,69 @@
-# Lumen PHP Framework
+# API-ToDo
+### Necessário:
+    - Docker e docker-compose.
+    - Composer.
+    - Make.
+### Execução:
+    - make run
+    - porta: 8000
 
-[![Build Status](https://travis-ci.org/laravel/lumen-framework.svg)](https://travis-ci.org/laravel/lumen-framework)
-[![Total Downloads](https://img.shields.io/packagist/dt/laravel/framework)](https://packagist.org/packages/laravel/lumen-framework)
-[![Latest Stable Version](https://img.shields.io/packagist/v/laravel/framework)](https://packagist.org/packages/laravel/lumen-framework)
-[![License](https://img.shields.io/packagist/l/laravel/framework)](https://packagist.org/packages/laravel/lumen-framework)
+#### Rotas:
+   ```/api/auth/register [POST] => Registro de usuário.```
+  - Payload: <br/>
+    ```json
+        {
+            "name": "string",
+            "email": "string",
+            "password": "string"
+        }
+    ```
 
-Laravel Lumen is a stunningly fast PHP micro-framework for building web applications with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Lumen attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as routing, database abstraction, queueing, and caching.
+  ```/api/auth/login [POST] => Login do usuário.```
+  - Payload: <br/>
+    ```json
+        {
+            "email": "string",
+            "password": "string"
+        }
+    ```
 
-## Official Documentation
+  - <b>Auth:</b>
+      - <b>Users:</b> <br/>
+          ```/api/profile [GET] => Visualizar os dados do usuário logado.```  <br/>
+          ```/api/profile [PUT] => Atualizar os dados do usuário.``` <br/>
+          - Payload:
+              ```json 
+                {
+                    "name": "string",
+                    "email": "string",
+                    "password": "string"
+                }
+              ```
+          ```/api/profile [DELETE] => Excluir perfil.``` <br/>
 
-Documentation for the framework can be found on the [Lumen website](https://lumen.laravel.com/docs).
-
-## Contributing
-
-Thank you for considering contributing to Lumen! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Lumen, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Lumen framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+      - <b>ToDos:</b> <br/>
+          ```/api/todos [POST] => Criar um todo.``` <br/>
+        - Payload:
+            ```json 
+                {
+                    "title": "string",
+                    "description": "string",
+                    "done": "boolean",
+                    "done_at": "string",
+                    "user_id": "string && uuid"
+                }
+            ```
+        ```/api/todos [GET] => Listar todos os todos.``` <br/>
+        ```/api/todos/{id} [GET] => Visualizar um todo.``` <br/>
+        ```/api/todos/{id} [PUT] => Atualizar um todo.``` <br/>
+         - Payload:
+              ```json 
+                { 
+                    "title": "string",
+                    "description": "string",
+                    "done": "boolean",
+                    "done_at": "string"
+                }
+              ```
+        ```/api/todos/{id} [DELETE] => Deletar um todo.``` <br/>
+        ```/api/todos/{id}/status/{status} [POST] => Alterar status de um todo. ({status}: 'done' || 'undone')```
