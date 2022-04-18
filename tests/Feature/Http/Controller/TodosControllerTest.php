@@ -24,22 +24,6 @@ class TodosControllerTest extends TestCase
 
         $this->assertResponseStatus(422);
         $this->seeJsonContains(['title' => ['The title field is required.']]);
-        $this->seeJsonContains(['user_id' => ['The user id field is required.']]);
-    }
-
-    public function testUserShouldNotCreateATodoWithWrongUserId(): void
-    {
-        $payload = [
-            'title' => 'Test',
-            'description' => 'Test a create todo route',
-            'done' => false,
-            'user_id' => 2
-        ];
-
-        $this->actingAs($this->user)->post(route('todos.store'), $payload);
-
-        $this->assertResponseStatus(422);
-        $this->seeJsonContains(['user_id' => ['The user id must be a valid UUID.']]);
     }
 
     public function testUserCanCreateATodo(): void
@@ -48,8 +32,7 @@ class TodosControllerTest extends TestCase
             'title' => 'Test',
             'description' => 'Test a create todo route',
             'done' => false,
-            'done_at' => null,
-            'user_id' => $this->user->id
+            'done_at' => null
         ];
 
         $this->actingAs($this->user)->post(route('todos.store'), $payload);

@@ -25,12 +25,12 @@ class TodosController extends Controller
     public function store(Request $request): JsonResponse
     {
         $this->validate($request, [
-            'title' => 'required|string',
-            'user_id' => 'required|uuid'
+            'title' => 'required|string'
         ]);
 
         try {
             $data = $request->all();
+            $data['user_id'] = Auth::user()->id;
             $entity = $this->service->create($data);
 
             return response()->json(['data' => $entity], JsonResponse::HTTP_CREATED);
