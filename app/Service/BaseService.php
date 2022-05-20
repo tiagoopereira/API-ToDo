@@ -2,7 +2,7 @@
 
 namespace App\Service;
 
-use App\Interface\RepositoryInterface;
+use App\Interfaces\RepositoryInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Symfony\Component\Translation\Exception\NotFoundResourceException;

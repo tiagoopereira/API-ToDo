@@ -3,7 +3,7 @@
 namespace App\Repository;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Interface\RepositoryInterface;
+use App\Interfaces\RepositoryInterface;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 abstract class BaseRepository implements RepositoryInterface

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Interface;
+namespace App\Interfaces;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;

@@ -2,7 +2,7 @@
 
 namespace App\Service;
 
-use App\Interface\RepositoryInterface;
+use App\Interfaces\RepositoryInterface;
 use App\Models\Todo;
 use App\Repository\TodosRepository;
 
