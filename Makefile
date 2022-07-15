@@ -1,3 +1,7 @@
+app := docker exec -it api_todos
+php := $(app) php
+artisan := $(php) artisan
+
 up:
 	docker-compose up -d
 down:
@@ -10,15 +14,15 @@ sqlite:
 	rm -rf database/database.sqlite
 	touch database/database.sqlite
 migrations:
-	docker exec -it api_todos php artisan migrate:fresh --seed
+	$(artisan) migrate:fresh --seed
 storage:
 	mkdir storage
 passport_install:
-	docker exec -it api_todos php artisan passport:install --force
+	$(artisan) passport:install --force
 test:
-	docker exec -it api_todos php vendor/bin/phpunit
+	$(php) vendor/bin/phpunit
 pint:
-	docker exec -it api_todos php vendor/bin/pint -v --test
+	$(php) vendor/bin/pint -v --test
 bash:
-	docker exec -it api_todos /bin/bash
+	$(app) /bin/bash
 run: up composer env sqlite migrations storage passport_install test
