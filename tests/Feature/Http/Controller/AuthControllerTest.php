@@ -20,7 +20,7 @@ class AuthControllerTest extends TestCase
     {
         $payload = [
             'email' => 'rand@email.com',
-            'password' => 'teste'
+            'password' => 'teste',
         ];
 
         $this->post(route('auth.login'), $payload);
@@ -30,7 +30,7 @@ class AuthControllerTest extends TestCase
         $this->seeJsonEquals([
             'error' => true,
             'message' => 'Wrong credentials.',
-            'code' => 401
+            'code' => 401,
         ]);
     }
 
@@ -40,7 +40,7 @@ class AuthControllerTest extends TestCase
 
         $payload = [
             'email' => $user->email,
-            'password' => 'teste'
+            'password' => 'teste',
         ];
 
         $this->post(route('auth.login'), $payload);
@@ -50,7 +50,7 @@ class AuthControllerTest extends TestCase
         $this->seeJsonEquals([
             'error' => true,
             'message' => 'Wrong credentials.',
-            'code' => 401
+            'code' => 401,
         ]);
     }
 
@@ -62,7 +62,7 @@ class AuthControllerTest extends TestCase
 
         $payload = [
             'email' => $user->email,
-            'password' => 'secret123'
+            'password' => 'secret123',
         ];
 
         $this->post(route('auth.login'), $payload);

@@ -3,18 +3,20 @@
 namespace App\Service;
 
 use App\Interfaces\RepositoryInterface;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Model;
 use Symfony\Component\Translation\Exception\NotFoundResourceException;
 
 abstract class BaseService
 {
     protected string $class;
+
     protected RepositoryInterface $repository;
 
     public function create(array $data): Model
     {
         $resource = $this->fillEntity($data);
+
         return $this->repository->create($resource);
     }
 
@@ -22,7 +24,6 @@ abstract class BaseService
     {
         return $this->repository->findAll($per_page, $user_id);
     }
-
 
     public function find(string $id, string $user_id = null): ?Model
     {

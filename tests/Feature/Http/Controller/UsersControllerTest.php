@@ -29,7 +29,7 @@ class UsersControllerTest extends TestCase
         $payload = [
             'name' => 'Teste',
             'email' => 'teste@email.com',
-            'password' => 'secret123'
+            'password' => 'secret123',
         ];
 
         $this->post(route('auth.register'), $payload);
@@ -54,7 +54,7 @@ class UsersControllerTest extends TestCase
         $payload = [
             'name' => 'testName',
             'email' => 'test@test.com',
-            'password' => 'update123'
+            'password' => 'update123',
         ];
 
         $this->actingAs($this->user)->put(route('users.update'), $payload);

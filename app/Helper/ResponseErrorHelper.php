@@ -12,7 +12,7 @@ abstract class ResponseErrorHelper
             [
                 'error' => true,
                 'message' => $message,
-                'code' => $code
+                'code' => $code,
             ],
             $code
         );

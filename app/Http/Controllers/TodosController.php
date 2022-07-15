@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Helper\ResponseErrorHelper;
 use App\Service\TodosService;
 use Illuminate\Http\JsonResponse;
-use App\Helper\ResponseErrorHelper;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\Translation\Exception\NotFoundResourceException;
 
 class TodosController extends Controller
 {
-    public function __construct(private TodosService $service) {}
+    public function __construct(private TodosService $service)
+    {
+    }
 
     public function index(Request $request): JsonResponse
     {
@@ -25,7 +27,7 @@ class TodosController extends Controller
     public function store(Request $request): JsonResponse
     {
         $this->validate($request, [
-            'title' => 'required|string'
+            'title' => 'required|string',
         ]);
 
         try {

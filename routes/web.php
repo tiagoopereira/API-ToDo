@@ -26,7 +26,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
             $router->get('/{id}', ['as' => 'todos.show', 'uses' => 'TodosController@show']);
             $router->put('/{id}', ['as' => 'todos.update', 'uses' => 'TodosController@update']);
             $router->delete('/{id}', ['as' => 'todos.destroy', 'uses' => 'TodosController@destroy']);
-    
+
             $router->post('/{id}/status/{status}', ['as' => 'todo.updateStatus', 'uses' => 'TodosController@updateStatus']);
         });
 

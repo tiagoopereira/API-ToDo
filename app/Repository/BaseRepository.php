@@ -2,9 +2,9 @@
 
 namespace App\Repository;
 
-use Illuminate\Database\Eloquent\Model;
 use App\Interfaces\RepositoryInterface;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Model;
 
 abstract class BaseRepository implements RepositoryInterface
 {
@@ -13,7 +13,7 @@ abstract class BaseRepository implements RepositoryInterface
     public function create(Model $entity): Model
     {
         return $this->class::create($entity->getAttributes());
-    } 
+    }
 
     public function findAll(int $per_page = null, string $user_id = null): ?LengthAwarePaginator
     {

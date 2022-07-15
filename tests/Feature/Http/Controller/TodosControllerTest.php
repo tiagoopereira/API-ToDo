@@ -32,7 +32,7 @@ class TodosControllerTest extends TestCase
             'title' => 'Test',
             'description' => 'Test a create todo route',
             'done' => false,
-            'done_at' => null
+            'done_at' => null,
         ];
 
         $this->actingAs($this->user)->post(route('todos.store'), $payload);
@@ -72,7 +72,7 @@ class TodosControllerTest extends TestCase
             'title' => 'test123',
             'description' => null,
             'done' => true,
-            'done_at' => new \Datetime('now', new DateTimeZone('America/Sao_Paulo'))
+            'done_at' => new \Datetime('now', new DateTimeZone('America/Sao_Paulo')),
         ];
 
         $this->actingAs($this->user)->put(route('todos.update', ['id' => $todo->id]), $payload);
@@ -100,7 +100,7 @@ class TodosControllerTest extends TestCase
         $this->seeJsonContains([
             'error' => true,
             'message' => 'Available status: done, undone.',
-            'code' => 400
+            'code' => 400,
         ]);
     }
 
@@ -118,7 +118,7 @@ class TodosControllerTest extends TestCase
         $todo = Todo::factory()->create([
             'user_id' => $this->user->id,
             'done' => true,
-            'done_at' => Carbon::now()
+            'done_at' => Carbon::now(),
         ]);
 
         $this->actingAs($this->user)->post(route('todo.updateStatus', ['id' => $todo->id, 'status' => 'undone']));

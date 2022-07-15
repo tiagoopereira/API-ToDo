@@ -2,8 +2,8 @@
 
 namespace App\Repository;
 
-use Carbon\Carbon;
 use App\Models\Todo;
+use Carbon\Carbon;
 
 class TodosRepository extends BaseRepository
 {
@@ -16,7 +16,7 @@ class TodosRepository extends BaseRepository
     {
         $todo->update([
             'done' => true,
-            'done_at' => Carbon::now()
+            'done_at' => Carbon::now(),
         ]);
 
         return $todo;
@@ -26,7 +26,7 @@ class TodosRepository extends BaseRepository
     {
         $todo->update([
             'done' => false,
-            'done_at' => null
+            'done_at' => null,
         ]);
 
         return $todo;

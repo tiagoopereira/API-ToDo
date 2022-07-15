@@ -39,8 +39,8 @@ return [
     'guards' => [
         'api' => [
             'driver' => 'passport',
-            'provider' => 'users'
-        ]
+            'provider' => 'users',
+        ],
     ],
 
     /*
@@ -63,8 +63,8 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => User::class
-        ]
+            'model' => User::class,
+        ],
     ],
 
     /*

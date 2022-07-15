@@ -2,22 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Helper\ResponseErrorHelper;
 use App\Service\UsersService;
 use Illuminate\Http\JsonResponse;
-use App\Helper\ResponseErrorHelper;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class UsersController extends Controller
 {
-    public function __construct(private UsersService $service) {}
+    public function __construct(private UsersService $service)
+    {
+    }
 
     public function store(Request $request): JsonResponse
     {
         $this->validate($request, [
             'name' => 'required|max:255',
             'email' => 'required|email|unique:users',
-            'password' => 'required'
+            'password' => 'required',
         ]);
 
         try {
@@ -34,6 +36,7 @@ class UsersController extends Controller
     {
         try {
             $user = Auth::user();
+
             return response()->json(['data' => $user]);
         } catch (\Exception $e) {
             return ResponseErrorHelper::json($e->getMessage(), JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
@@ -46,8 +49,8 @@ class UsersController extends Controller
 
         $this->validate($request, [
             'name' => 'required|max:255',
-            'email' => 'required|email|unique:users,email,' . $id,
-            'password' => 'required'
+            'email' => 'required|email|unique:users,email,'.$id,
+            'password' => 'required',
         ]);
 
         try {

@@ -2,21 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Service\AuthService;
 use App\Helper\ResponseErrorHelper;
+use App\Service\AuthService;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
-    public function __construct(private AuthService $authService) {}
+    public function __construct(private AuthService $authService)
+    {
+    }
 
     public function login(Request $request): JsonResponse
     {
         $this->validate($request, [
             'email' => 'required|email',
-            'password' => 'required'
+            'password' => 'required',
         ]);
 
         try {

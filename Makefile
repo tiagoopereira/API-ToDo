@@ -17,6 +17,8 @@ passport_install:
 	docker exec -it api_todos php artisan passport:install --force
 test:
 	docker exec -it api_todos php vendor/bin/phpunit
+pint:
+	docker exec -it api_todos php vendor/bin/pint -v --test
 bash:
 	docker exec -it api_todos /bin/bash
 run: up composer env sqlite migrations storage passport_install test

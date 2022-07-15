@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use App\Models\Todo;
-use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class TodoFactory extends Factory
@@ -27,7 +26,7 @@ class TodoFactory extends Factory
             'description' => $this->faker->text(50),
             'done' => false,
             'done_at' => null,
-            'user_id' => $this->faker->uuid()
+            'user_id' => $this->faker->uuid(),
         ];
     }
 }

@@ -3,18 +3,20 @@
 namespace App\Service;
 
 use App\Repository\UsersRepository;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Support\Facades\Hash;
 
 class AuthService
 {
-    public function __construct(private UsersRepository $usersRepository) {}
+    public function __construct(private UsersRepository $usersRepository)
+    {
+    }
 
     public function login(string $email, string $password): array
     {
         $user = $this->usersRepository->findOneBy('email', $email);
 
-        if (is_null($user) || !Hash::check($password, $user->password)) {
+        if (is_null($user) || ! Hash::check($password, $user->password)) {
             throw new AuthenticationException('Wrong credentials.');
         }
 
@@ -22,7 +24,7 @@ class AuthService
 
         return [
             'access_token' => $token->accessToken,
-            'expires_at' => $token->token->expires_at
+            'expires_at' => $token->token->expires_at,
         ];
     }
 }

@@ -4,8 +4,8 @@ namespace App\Service;
 
 use App\Models\User;
 use App\Repository\UsersRepository;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class UsersService extends BaseService
 {
