@@ -17,20 +17,12 @@ abstract class BaseRepository implements RepositoryInterface
 
     public function findAll(int $per_page = null, string $user_id = null): ?LengthAwarePaginator
     {
-        if (is_null($user_id)) {
-            return $this->class::paginate($per_page);
-        }
-
-        return $this->findBy('user_id', $user_id, $per_page);
+        return is_null($user_id) ? $this->class::paginate($per_page) : $this->findBy('user_id', $user_id, $per_page);
     }
 
     public function find(string $id, string $user_id = null): ?Model
     {
-        if (is_null($user_id)) {
-            return $this->class::find($id);
-        }
-
-        return $this->class::find($id)?->where('user_id', $user_id)->first();
+        return is_null($user_id) ? $this->class::find($id) : $this->class::find($id)?->where('user_id', $user_id)->first();
     }
 
     public function findBy(string $field, mixed $value, int $per_page = null): ?LengthAwarePaginator
